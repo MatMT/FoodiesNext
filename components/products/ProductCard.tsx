@@ -1,6 +1,7 @@
 import {Product} from "@prisma/client";
 import {formatCurrency} from "@/src/utils";
 import Image from "next/image";
+import AddProductBtn from "./AddProductBtn";
 
 type ProductCardProps = {
     product: Product
@@ -24,12 +25,8 @@ export default function ProductCard({product} : ProductCardProps) {
                     {formatCurrency(product.price)}
                 </p>
 
-                <button
-                type="button"
-                className="bg-indigo-600 text-white font-bold py-2 px-4 rounded w-full text-xl uppercase cursor-pointer mt-5 hover:bg-indigo-700 transition duration-200"
-                >
-                Add
-                </button>
+                {/* Se convierte el boton a elemento de cliente */}
+                <AddProductBtn product={product} />
             </div>
 
         </div>
