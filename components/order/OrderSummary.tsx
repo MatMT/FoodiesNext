@@ -1,9 +1,11 @@
 "use client";
 import { useStore } from "@/src/store";
 import ProductDetails from "./ProductDetails";
+import { toast } from "react-toastify";
 import { useMemo } from "react";
 import { formatCurrency } from "@/src/utils";
 import { createOrder } from "@/actions/create-order-action";
+import { OrderSchema } from "@/src/schema";
 
 export default function OrderSummary() {
   const order = useStore((state) => state.order);
@@ -19,9 +21,20 @@ export default function OrderSummary() {
   );
 
   const handleCreateOrder = (formData: FormData) => {
-    console.log(formData.get('name'));
-    
-    createOrder();
+    const data = {
+      name: formData.get("name"),
+    };
+
+    const result = OrderSchema.safeParse(data);
+
+    if (!result.success) {
+      result.error.issues.forEach((issue) => {
+        toast.error(issue.message);
+      });
+      return;
+    }
+
+    createOrder(data);
   };
 
   return (
