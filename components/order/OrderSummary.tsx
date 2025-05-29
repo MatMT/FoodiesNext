@@ -9,6 +9,7 @@ import { OrderSchema } from "@/src/schema";
 
 export default function OrderSummary() {
   const order = useStore((state) => state.order);
+  const clearOrder = useStore((state) => state.clearOrder);
 
   const total = useMemo(
     () =>
@@ -20,13 +21,15 @@ export default function OrderSummary() {
     [order] // Recalculate only when the order array changes
   );
 
-  const handleCreateOrder = (formData: FormData) => {
+  const handleCreateOrder = async (formData: FormData) => {
     const data = {
       name: formData.get("name"),
+      total,
+      order
     };
 
+    // Check data structure
     const result = OrderSchema.safeParse(data);
-
     if (!result.success) {
       result.error.issues.forEach((issue) => {
         toast.error(issue.message);
@@ -34,7 +37,16 @@ export default function OrderSummary() {
       return;
     }
 
-    createOrder(data);
+    const response = await createOrder(data);
+    
+    if(response?.errors) {
+      response.errors.forEach((issue) => {
+        toast.error(issue.message);
+      })
+    }
+
+    toast.success('Order received successfully!');
+    clearOrder();
   };
 
   return (
