@@ -25,6 +25,23 @@ export type ProductWithCategory = Prisma.ProductGetPayload<{
 
 export const SearchSchema = z.object({
     search: z.string()
-                .trim()
-                .min(1, { message: 'Input search cannot be empty'}),
+        .trim()
+        .min(1, { message: 'Input search cannot be empty' }),
 });
+
+export const ProductSchema = z.object({
+    name: z.string()
+        .trim()
+        .min(1, { message: "Product's name cannot be empty" }),
+    price: z.string()
+        .trim()
+        .transform((value) => parseFloat(value))
+        .refine((value) => value > 0, { message: 'Invalid price' })
+        .or(z.number().min(1, { message: "Product's price is mandatory" })),
+    categoryId: z.string()
+        .trim()
+        .transform((value) => parseInt(value))
+        .refine((value) => value > 0, { message: "Product's category is mandatory" })
+        .or(z.number().min(1, { message: "Product's category is mandatory" })),
+    image: z.string().min(1, { message: "Produc'ts image is mandatory" })
+})
