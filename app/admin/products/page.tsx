@@ -1,9 +1,6 @@
-import OrderCard from "@/components/admin/OrderCard";
 import Heading from "@/components/order/Heading";
 import { prisma } from "@/src/lib/prisma";
-import { products } from "../../../prisma/data/products";
 import ProductTable from "@/components/products/ProductTable";
-import { SearchParams } from "next/dist/server/request/search-params";
 import ProductsPagination from "@/components/products/ProductsPagination";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -62,11 +59,9 @@ export default async function page({
       <div className="px-2 sm:px-4 lg:px-6 mt-10">
         <div className="mt-8 flow-root ">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 bg-white p-5 ">
-              <ProductTable products={products} />
+            <ProductTable products={products} />
 
-              <ProductsPagination page={page} totalPages={totalPages} />
-            </div>
+            <ProductsPagination page={page} totalPages={totalPages} />
           </div>
         </div>
       </div>
