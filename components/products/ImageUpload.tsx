@@ -1,10 +1,11 @@
 "use client";
+import { getImagePath } from "@/src/utils";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { useState } from "react";
 import { TbPhotoPlus } from "react-icons/tb";
 
-export default function ImageUpload() {
+export default function ImageUpload({ image }: { image: string | undefined }) {
   const [imageUrl, setImageUrl] = useState("");
 
   return (
@@ -27,7 +28,7 @@ export default function ImageUpload() {
               Product Image
             </label>
             <div
-              className="relative cursor-pointer hover:opacity-70 transition p-10 border-neutral-300 flex justify-center items-center gap-4 text-neutral-600 bg-slate-100"
+              className="relative cursor-pointer hover:opacity-70 transition h-50 p-10 border-neutral-300 flex justify-center items-center gap-4 text-neutral-600 bg-slate-100"
               onClick={() => open()}
             >
               {imageUrl ? (
@@ -48,7 +49,27 @@ export default function ImageUpload() {
             </div>
           </div>
 
-          <input type="hidden" name="image" value={imageUrl} />
+          {image && !imageUrl && (
+            <div>
+              <label className="text-slate-800 font-bold block mt-1 ml-1">
+                Current Image:
+              </label>
+              <div className="relative w-64 h-64">
+                <Image
+                  fill
+                  style={{ objectFit: "contain" }}
+                  src={getImagePath(image)}
+                  alt="Product Image"
+                />
+              </div>
+            </div>
+          )}
+
+          <input
+            type="hidden"
+            name="image"
+            defaultValue={imageUrl ? imageUrl : image}
+          />
         </>
       )}
     </CldUploadWidget>

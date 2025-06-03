@@ -1,17 +1,19 @@
 "use client";
 
-import { createProduct } from "@/actions/create-product-action";
+import { updateProduct } from "@/actions/update-product-action";
 import { prisma } from "@/src/lib/prisma";
 import { ProductSchema } from "@/types";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-export default function AddProductForm({
+export default function EditProductForm({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const params = useParams();
+  const id = +params.id!;
 
   const handleCreateForm = async (formData: FormData) => {
     const data = {
@@ -30,7 +32,7 @@ export default function AddProductForm({
       return;
     }
 
-    const response = await createProduct(result.data);
+    const response = await updateProduct(result.data, id);
     if (response?.errors) {
       response.errors.forEach((issue) => {
         toast.error(issue.message);
@@ -40,7 +42,7 @@ export default function AddProductForm({
     }
     
     router.push("/admin/products");
-    toast.success("Product created successfully!");
+    toast.success("Product updated successfully!");
   };
 
   return (
@@ -56,7 +58,7 @@ export default function AddProductForm({
             type="submit"
             className="w-full px-4 mt-5 py-2 bg-indigo-600 font-bold text-white rounded-md hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:black"
           >
-            Create Product
+            Update Product
           </button>
         </div>
       </form>

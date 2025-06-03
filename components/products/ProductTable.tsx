@@ -1,4 +1,5 @@
 import { ProductWithCategory } from "@/types";
+import Link from "next/link";
 
 type ProductTableProps = {
   products: ProductWithCategory[];
@@ -50,9 +51,11 @@ export default function ProductTable({ products }: ProductTableProps) {
                   {item.category.name}
                 </td>
                 <td className="px-4 py-4">
-                  <button className="text-blue-600 hover:underline font-semibold">
+                  <Link
+                  href={`products/${item.id}/edit`}
+                  className="text-blue-600 hover:underline font-semibold">
                     Editar
-                  </button>
+                  </Link>
                 </td>
               </tr>
             ))

@@ -29,7 +29,7 @@ export default async function page({
 
   return (
     <div>
-      <Heading>Search results: {search}</Heading>
+      <Heading>Search results - {search}</Heading>
 
       <div className="flex flex-col px-2 gap-6 text-center">
         <Link
