@@ -13,7 +13,7 @@ export default function ImageUpload({ image }: { image: string | undefined }) {
       uploadPreset="unsigned_preset"
       options={{ maxFiles: 1 }}
       onSuccess={(result, { widget }) => {
-        // @ts-ignore
+        // @ts-expect-error - Third party library lacks type definitions
         const secureUrl = result?.info?.secure_url;
         if (secureUrl) {
           setImageUrl(secureUrl);

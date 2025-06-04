@@ -1,7 +1,6 @@
 "use client";
 
 import { createProduct } from "@/actions/create-product-action";
-import { prisma } from "@/src/lib/prisma";
 import { ProductSchema } from "@/types";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";

@@ -22,11 +22,12 @@ async function getProducts(page: number = 1, pageSize: number) {
 }
 
 export default async function page({
-  searchParams,
+  params,
 }: {
-  searchParams: { page: string };
+  params: Promise<{ page: string }>;
 }) {
-  const page = +searchParams.page || 1;
+  const resolvedParams = await params;
+  const page = +resolvedParams.page || 1;
   const pageSize = 10;
 
   if (page < 1) redirect(`/admin/products`);

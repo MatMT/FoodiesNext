@@ -1,6 +1,5 @@
 import Heading from "@/components/order/Heading";
 import { prisma } from "@/src/lib/prisma";
-import { products } from "../../../../prisma/data/products";
 import ProductTable from "@/components/products/ProductTable";
 import ProductSearchForm from "@/components/products/ProductSearchForm";
 import Link from "next/link";
@@ -20,11 +19,13 @@ async function getProductsWith(searchTerm: string) {
 }
 
 export default async function page({
-  searchParams,
+  params,
 }: {
-  searchParams: { search: string };
+  params: Promise<{ search: string }>;
 }) {
-  const search = searchParams.search || "";
+   // Hacer await de params
+  const resolvedParams = await params;
+  const search = resolvedParams.search || "";
   const products = await getProductsWith(search);
 
   return (

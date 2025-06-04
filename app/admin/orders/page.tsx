@@ -4,18 +4,18 @@ import Heading from "@/components/order/Heading";
 import { OrderWithProducts } from "@/types";
 import useSWR from "swr";
 
-export default function page() {
+export default function OrdersPage() {
   const url = "/admin/orders/api";
   const fetcher = () =>
     fetch(url)
       .then((res) => res.json())
       .then((data) => data);
-  const { data, error, isLoading } = useSWR<OrderWithProducts[]>(url, fetcher, {
+  const { data, isLoading } = useSWR<OrderWithProducts[]>(url, fetcher, {
     refreshInterval: 10000,
     revalidateOnFocus: false,
   });
 
-  if (isLoading) return <p>"Loading..."</p>;
+  if (isLoading) return <p>Loading...</p>;
 
   if (data)
     return (
