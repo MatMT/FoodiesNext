@@ -41,7 +41,7 @@ export default function OrderCard({ order } : OrderCardProps) {
                 <input
                     type="submit"
                     className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer"
-                    value='Marcar Orden Completada'
+                    value='Check order as completed'
                 />
             </form>
         </section>
